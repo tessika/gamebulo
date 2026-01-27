@@ -95,16 +95,22 @@
 
         .view-toggle {
             position: absolute;
-            left: var(--spacing-md);
+            right: var(--spacing-md);
+            left: auto;
             top: calc(100% + 10px);
-            padding: 8px 14px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 0;
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.04);
             color: var(--text);
-            font-size: 12px;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 0;
+            text-transform: none;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -112,6 +118,10 @@
         .view-toggle:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .view-toggle i {
+            pointer-events: none;
         }
 
         .logo-text {
@@ -254,6 +264,20 @@
             margin: 0 auto;
         }
 
+        .about-section {
+            padding: var(--spacing-xl) var(--spacing-md);
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            font-size: clamp(18px, 2.4vw, 24px);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -310,7 +334,8 @@
 
             .view-toggle {
                 position: static;
-                margin-top: 2px;
+                margin-top: 4px;
+                align-self: flex-end;
             }
 
             .hero {
@@ -337,6 +362,10 @@
                 margin-bottom: var(--spacing-md);
             }
 
+            .about-section {
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+
             .games-grid.dense {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 10px;
@@ -344,6 +373,25 @@
 
             .games-grid.dense .game-card {
                 height: 220px;
+            }
+
+            .games-grid.dense .game-overlay {
+                padding: 10px;
+            }
+
+            .games-grid.dense .game-title {
+                font-size: 20px;
+                line-height: 1.1;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .games-grid.dense .game-meta,
+            .games-grid.dense .game-description,
+            .games-grid.dense .game-tags {
+                display: none;
             }
 
             .game-overlay {
@@ -401,6 +449,34 @@
 
         .games-grid.dense .game-card:hover {
             transform: translateY(-6px) scale(1.01);
+        }
+
+        .games-grid.dense .game-overlay {
+            opacity: 1;
+            transform: translateY(0);
+            padding: 14px;
+        }
+
+        .games-grid.dense .game-title {
+            font-size: 22px;
+            margin-bottom: 6px;
+            line-height: 1.15;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .games-grid.dense .game-meta {
+            font-size: 12px;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .games-grid.dense .game-description,
+        .games-grid.dense .game-tags {
+            display: none;
         }
 
         .game-image {
@@ -472,7 +548,7 @@
             color: var(--text-secondary);
             margin-bottom: var(--spacing-sm);
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -809,10 +885,12 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="#" class="nav-link active">Collection</a></li>
-                <li><a href="#" class="nav-link">About</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
             </ul>
         </nav>
-        <button class="view-toggle" id="viewToggle" type="button">Vista Fitta</button>
+        <button class="view-toggle" id="viewToggle" type="button" aria-label="Vista fitta">
+            <i class="fas fa-table-cells-large" aria-hidden="true"></i>
+        </button>
     </header>
 
     <!-- Hero -->
@@ -827,7 +905,6 @@
     <section class="games-section">
         <div class="section-header">
             <h2 class="section-title">THE COLLECTION</h2>
-            <p class="section-subtitle">Explore 41 carefully selected abstract board games</p>
         </div>
 
         <!-- Search -->
@@ -839,8 +916,8 @@
         <!-- Filters -->
         <div class="filters-container" id="filters">
             <button class="filter-btn active" data-filter="all">All Games</button>
-            <button class="filter-btn" data-filter="2-players">2 Players</button>
-            <button class="filter-btn" data-filter="2plus-players">2+ Players</button>
+            <button class="filter-btn" data-filter="TWO-PLAYERS">2 Players</button>
+            <button class="filter-btn" data-filter="TWO-PLUS-PLAYERS">2+ Players</button>
             <button class="filter-btn" data-filter="wood">Wood</button>
             <button class="filter-btn" data-filter="plastic">Plastic</button>
             <button class="filter-btn" data-filter="cardboard">Cardboard</button>
@@ -855,6 +932,22 @@
             <div class="loader"></div>
             <p>Loading games...</p>
         </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+        <div class="section-header">
+            <h2 class="section-title">ABOUT</h2>
+        </div>
+        <p class="about-text">
+            GAMEBULO is a platform for all the board games lovers, especially for the ones who like abstract shapes and get out of the ordinary.
+        </p>
+        <p class="about-text">
+            Please feel free to participate as you wish.
+        </p>
+        <p class="about-text">
+            Why not play all together?
+        </p>
     </section>
 
     <!-- Modal -->
@@ -918,7 +1011,7 @@
                 players: "1-8",
                 duration: "10-20m",
                 year: "1983",
-                tags: ["dexterity", "stacking", "classic", "wood", "2plus-players"],
+                tags: ["dexterity", "stacking", "classic", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/JENGA.jpg",
                 description: "The classic block-stacking game that tests steady hands and nerves of steel. Stack wooden blocks in a tower, then take turns pulling out blocks one by one until it crashes.",
                 links: [
@@ -934,7 +1027,7 @@
                 players: "1-4",
                 duration: "5-15m",
                 year: "2010",
-                tags: ["dexterity", "stacking", "abstract", "wood", "2plus-players"],
+                tags: ["dexterity", "stacking", "abstract", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/TUMI-ISHI.jpg",
                 description: "Modern Japanese rock piling game with nine unique wooden polyhedrons. Each piece has its own shape, size, color and texture for endless combinations.",
                 links: [
@@ -949,7 +1042,7 @@
                 players: "2-5",
                 duration: "15-30m",
                 year: "2000",
-                tags: ["dexterity", "stacking", "unique", "wood", "2plus-players"],
+                tags: ["dexterity", "stacking", "unique", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/HAMSTERROLLE .jpg",
                 description: "Place wooden pieces within a divided hamster wheel without any pieces falling out. Dislodged pieces become penalties in this rotating dexterity challenge.",
                 links: [
@@ -964,7 +1057,7 @@
                 players: "2-4",
                 duration: "20-40m",
                 year: "2002",
-                tags: ["dexterity", "magnetic", "strategy", "plastic", "2plus-players"],
+                tags: ["dexterity", "magnetic", "strategy", "plastic", "TWO-PLUS-PLAYERS"],
                 image: "img/ATTRACTION .jpg",
                 description: "Flick 'shooter' magnets to attract and collect other magnets. Magnetic fields create unpredictable force vectors and strategic depth.",
                 links: [
@@ -979,7 +1072,7 @@
                 players: "2",
                 duration: "10-25m",
                 year: "1995",
-                tags: ["abstract", "3D", "strategy", "two-player", "wood", "2-players"],
+                tags: ["abstract", "3D", "strategy", "TWO-PLAYERS", "wood"],
                 image: "img/DOUBLE DECKER .jpg",
                 description: "Three-dimensional tic-tac-toe variant with dual-color pieces. Each placement affects both player's positions simultaneously on a 3x3 grid.",
                 links: [
@@ -994,7 +1087,7 @@
                 players: "2-4",
                 duration: "30-45m",
                 year: "2006",
-                tags: ["strategy", "abstract", "bluffing", "wood", "2plus-players"],
+                tags: ["strategy", "abstract", "bluffing", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/CITYSCAPE.jpg",
                 description: "Set secret goals for city skyline views, then take turns adding blocks. Score points for meeting goals exactly in this bluffing strategy game.",
                 links: [
@@ -1009,7 +1102,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2000",
-                tags: ["dexterity", "stacking", "hidden", "wood", "2plus-players"],
+                tags: ["dexterity", "stacking", "hidden", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/BABEL.jpg",
                 description: "Building game with cubes containing embedded marbles. Keep marbles hidden inside the tower as you build upward for structural integrity.",
                 links: [
@@ -1024,7 +1117,7 @@
                 players: "2-4",
                 duration: "15-30m",
                 year: "2003",
-                tags: ["abstract", "color-matching", "strategy", "cardboard", "2plus-players"],
+                tags: ["abstract", "color-matching", "strategy", "cardboard", "TWO-PLUS-PLAYERS"],
                 image: "img/MOZAA.jpg",
                 description: "Color-matching game with 64 unique tiles. Create beautiful mosaic patterns while competing for the largest color fields.",
                 links: [
@@ -1039,7 +1132,7 @@
                 players: "2-4",
                 duration: "30-60m",
                 year: "1876",
-                tags: ["dexterity", "classic", "strategy", "wood", "2plus-players"],
+                tags: ["dexterity", "classic", "strategy", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/CROKINOLE.jpg",
                 description: "Classic Canadian disc-flicking game. Shoot discs across a circular board to score points while knocking away opponents' discs.",
                 links: [
@@ -1054,7 +1147,7 @@
                 players: "2-6",
                 duration: "20-40m",
                 year: "1996",
-                tags: ["dexterity", "balance", "tension", "wood", "2plus-players"],
+                tags: ["dexterity", "balance", "tension", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/BAMBOLEO.jpg",
                 description: "Three-layer balancing act: cork sphere, wooden disc, and 25 asymmetrical pieces. Remove pieces without disturbing the equilibrium.",
                 links: [
@@ -1069,7 +1162,7 @@
                 players: "2",
                 duration: "15-25m",
                 year: "2005",
-                tags: ["abstract", "connection", "two-player", "plastic", "2-players"],
+                tags: ["abstract", "connection", "TWO-PLAYERS", "plastic"],
                 image: "img/RUBBER ROAD .jpg",
                 description: "Connect opposing sides with rubber bands while preventing opponent from doing the same. Rubber bands cannot overlap in this topological challenge.",
                 links: [
@@ -1084,8 +1177,8 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2002",
-                tags: ["dexterity", "stacking", "precision", "wood", "2plus-players"],
-                image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                tags: ["dexterity", "stacking", "precision", "wood", "TWO-PLUS-PLAYERS"],
+                image: "img/cubicado.jpg",
                 description: "Remove colored cubes from a pyramid using sticks without disturbing the structure. Steady hands required for this precision game.",
                 links: [
                     {name: "BGG", url: "https://boardgamegeek.com/boardgame/13677/cubicado"},
@@ -1099,8 +1192,8 @@
                 players: "2",
                 duration: "20-40m",
                 year: "2007",
-                tags: ["abstract", "puzzle", "two-player", "wood", "2-players"],
-                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                tags: ["abstract", "puzzle", "TWO-PLAYERS", "wood"],
+                image: "img/PLAN CHEROLI.jpg",
                 description: "Move arch-shaped pieces across the board by rotating legs around pivot points. Geometric obstruction creates pathfinding challenges.",
                 links: [
                     {name: "BGG", url: "https://boardgamegeek.com/boardgame/34397/plan-cheroli"},
@@ -1114,8 +1207,8 @@
                 players: "2-6",
                 duration: "60-90m",
                 year: "2020",
-                tags: ["strategy", "futurism", "thinking", "cardboard", "2plus-players"],
-                image: "https://images.unsplash.com/photo-1542751110-97427bbecf20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                tags: ["strategy", "futurism", "thinking", "cardboard", "TWO-PLUS-PLAYERS"],
+                image: "img/IMPACT.jpg",
                 description: "Foresight game about emerging technologies and societal consequences. Wooden components represent tech vectors in this educational game.",
                 links: [
                     {name: "Kickstarter", url: "https://www.kickstarter.com/projects/futureco/impact"},
@@ -1129,7 +1222,7 @@
                 players: "2-4",
                 duration: "15-25m",
                 year: "1998",
-                tags: ["dexterity", "precision", "removal", "wood", "2plus-players"],
+                tags: ["dexterity", "precision", "removal", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/BALLAST.jpg",
                 description: "Pick-up-sticks variation with wooden cylinders in a circular frame. Remove pieces without causing chain reactions.",
                 links: [
@@ -1144,7 +1237,7 @@
                 players: "2-4",
                 duration: "30-45m",
                 year: "2015",
-                tags: ["abstract", "3D", "modular", "plastic", "2plus-players"],
+                tags: ["abstract", "3D", "modular", "plastic", "TWO-PLUS-PLAYERS"],
                 image: "img/INFINIFIED .jpg",
                 description: "Dynamic board construction with magnetic components. Create infinite configurations in three dimensions.",
                 links: [
@@ -1159,7 +1252,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1988",
-                tags: ["abstract", "3D", "pyramid", "wood", "2-players"],
+                tags: ["abstract", "3D", "pyramid", "wood", "TWO-PLAYERS"],
                 image: "img/DRHOMBIX .jpg",
                 description: "Stack rhombic dodecahedrons to build a pyramid. Two-color pieces create contrasting patterns in 3D space.",
                 links: [
@@ -1174,7 +1267,7 @@
                 players: "2",
                 duration: "20-35m",
                 year: "2011",
-                tags: ["abstract", "strategy", "elastic", "two-player", "plastic", "2-players"],
+                tags: ["abstract", "strategy", "elastic", "TWO-PLAYERS", "plastic"],
                 image: "img/BOUNDARY.jpg",
                 description: "Elastic band divides the playing field. Eliminate pieces by stretching the boundary around them in this dynamic game.",
                 links: [
@@ -1189,7 +1282,7 @@
                 players: "2-4",
                 duration: "25-40m",
                 year: "1992",
-                tags: ["abstract", "color-matching", "strategy", "cardboard", "2plus-players"],
+                tags: ["abstract", "color-matching", "strategy", "cardboard", "TWO-PLUS-PLAYERS"],
                 image: "img/BLOCK OUT:COLOMINO.jpg",
                 description: "Place multi-colored tiles with edge matching. Block out areas to create scoring opportunities in this strategic game.",
                 links: [
@@ -1204,7 +1297,7 @@
                 players: "2-4",
                 duration: "15-25m",
                 year: "1995",
-                tags: ["dexterity", "extraction", "precision", "wood", "2plus-players"],
+                tags: ["dexterity", "extraction", "precision", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/KARAMO.jpg",
                 description: "Jenga variant with lateral stick removal. Push sticks out of a pile without disturbing others for points.",
                 links: [
@@ -1219,7 +1312,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2004",
-                tags: ["dexterity", "stacking", "scoring", "wood", "2plus-players"],
+                tags: ["dexterity", "stacking", "scoring", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/TOKAMI.jpg",
                 description: "Remove blocks and place them higher on an X-shaped base without knocking down the structure.",
                 links: [
@@ -1234,7 +1327,7 @@
                 players: "2",
                 duration: "15-25m",
                 year: "1900",
-                tags: ["abstract", "strategy", "capture", "two-player", "wood", "2-players"],
+                tags: ["abstract", "strategy", "capture", "TWO-PLAYERS", "wood"],
                 image: "img/LA TREL.jpg",
                 description: "Traditional capture game with jumping mechanics. Corner captures use chess-like substitution rules.",
                 links: [
@@ -1249,7 +1342,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "1800",
-                tags: ["abstract", "traditional", "capture", "two-player", "wood", "2-players"],
+                tags: ["abstract", "traditional", "capture", "TWO-PLAYERS", "wood"],
                 image: "img/DABLOT PREJJESNE.jpg",
                 description: "Lapland strategy game depicting conflict between Lapp king and landlord. Asymmetrical piece values.",
                 links: [
@@ -1264,7 +1357,7 @@
                 players: "2-4",
                 duration: "25-40m",
                 year: "1999",
-                tags: ["abstract", "3D", "pyramid", "strategy", "wood", "2plus-players"],
+                tags: ["abstract", "3D", "pyramid", "strategy", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/SCALINO.jpg",
                 description: "Build a 3D pyramid with adjacency restrictions. Score based on aerial view optical illusions.",
                 links: [
@@ -1279,7 +1372,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1996",
-                tags: ["abstract", "connection", "strategy", "two-player", "wood", "2-players"],
+                tags: ["abstract", "connection", "strategy", "TWO-PLAYERS", "wood"],
                 image: "img/TOUCH.jpg",
                 description: "Place J-shaped hexacubes to touch opponent's pieces. Each touch scores one point in this contact-based game.",
                 links: [
@@ -1294,7 +1387,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "2002",
-                tags: ["abstract", "spatial", "enclosure", "two-player", "wood", "2-players"],
+                tags: ["abstract", "spatial", "enclosure", "TWO-PLAYERS", "wood"],
                 image: "img/1 STEIN + CO..jpg",
                 description: "Place 2×3×4 stones to enclose empty squares. Three possible orientations with placement restrictions.",
                 links: [
@@ -1309,7 +1402,7 @@
                 players: "2",
                 duration: "20-35m",
                 year: "2003",
-                tags: ["abstract", "surround", "strategy", "two-player", "plastic", "2-players"],
+                tags: ["abstract", "surround", "strategy", "TWO-PLAYERS", "plastic"],
                 image: "img/ENTRAPMENT.jpg",
                 description: "Surround opponent's pawns with obstacles to immobilize them. Shrinking playing field adds tension.",
                 links: [
@@ -1324,7 +1417,7 @@
                 players: "2",
                 duration: "15-30m",
                 year: "2009",
-                tags: ["abstract", "pentominoes", "stacking", "two-player", "wood", "2-players"],
+                tags: ["abstract", "pentominoes", "stacking", "TWO-PLAYERS", "wood"],
                 image: "img/PENT-UP.jpg",
                 description: "Pentomino stacking game with vertical placement. Score based on piece projection on top layers.",
                 links: [
@@ -1339,7 +1432,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "2010",
-                tags: ["abstract", "hexagonal", "enclosure", "two-player", "wood", "2-players"],
+                tags: ["abstract", "hexagonal", "enclosure", "TWO-PLAYERS", "wood"],
                 image: "img/COERCEO.jpg",
                 description: "Hexagonal board game with shrinking modular board. Enclose opponent's pieces to remove them.",
                 links: [
@@ -1354,7 +1447,7 @@
                 players: "2",
                 duration: "30-50m",
                 year: "2011",
-                tags: ["abstract", "strategy", "angles", "two-player", "cardboard", "2-players"],
+                tags: ["abstract", "strategy", "angles", "TWO-PLAYERS", "cardboard"],
                 image: "img/PERIGON.jpg",
                 description: "Angular strategy game combining Chess complexity with Backgammon accessibility.",
                 links: [
@@ -1369,7 +1462,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "2009",
-                tags: ["abstract", "connection", "hexagonal", "two-player", "wood", "2-players"],
+                tags: ["abstract", "connection", "hexagonal", "TWO-PLAYERS", "wood"],
                 image: "img/TRITT.jpg",
                 description: "Hexagonal connection game with three-dot pieces. Create three-in-a-row while blocking opponent.",
                 links: [
@@ -1384,7 +1477,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1988",
-                tags: ["abstract", "3D", "magnetic", "two-player", "wood", "2-players"],
+                tags: ["abstract", "3D", "magnetic", "TWO-PLAYERS", "wood"],
                 image: "img/AXIOM.jpg",
                 description: "Magnetic spheres on 3D framework with geometric movement constraints.",
                 links: [
@@ -1399,7 +1492,7 @@
                 players: "2",
                 duration: "10-20m",
                 year: "2011",
-                tags: ["abstract", "minimalist", "stacking", "two-player", "wood", "2-players"],
+                tags: ["abstract", "minimalist", "stacking", "TWO-PLAYERS", "wood"],
                 image: "img/SHIBUMI.jpg",
                 description: "Minimalist game system with 4×4 grid and 48 balls. Square pyramidal packing creates elegant constraints.",
                 links: [
@@ -1414,7 +1507,7 @@
                 players: "2",
                 duration: "10-15m",
                 year: "2012",
-                tags: ["abstract", "minimalist", "triangles", "two-player", "cardboard", "2-players"],
+                tags: ["abstract", "minimalist", "triangles", "TWO-PLAYERS", "cardboard"],
                 image: "img/SPANGLES.jpg",
                 description: "Ultra-minimal game with two-color triangles. Construct larger triangles from smaller ones.",
                 links: [
@@ -1429,7 +1522,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1985",
-                tags: ["dexterity", "magnetic", "physics", "two-player", "plastic", "2-players"],
+                tags: ["dexterity", "magnetic", "physics", "TWO-PLAYERS", "plastic"],
                 image: "img/POLARITY.jpg",
                 description: "Control hovering magnetic discs using master magnets. Magnetic fields create complex interactions.",
                 links: [
@@ -1444,7 +1537,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1998",
-                tags: ["abstract", "3D", "five-in-a-row", "two-player", "wood", "2-players"],
+                tags: ["abstract", "3D", "five-in-a-row", "TWO-PLAYERS", "wood"],
                 image: "img/QUINAMID.jpg",
                 description: "Five-in-a-row on stacked boards that slide and rotate. Three-dimensional alignment challenge.",
                 links: [
@@ -1459,7 +1552,7 @@
                 players: "2-4",
                 duration: "20-35m",
                 year: "2006",
-                tags: ["abstract", "color-matching", "family", "cardboard", "2plus-players"],
+                tags: ["abstract", "color-matching", "family", "cardboard", "TWO-PLUS-PLAYERS"],
                 image: "img/RHOMBO CONTINUO.jpg",
                 description: "Rhombus-shaped Continuo variant with four-color edge matching. Family-friendly abstract game.",
                 links: [
@@ -1474,7 +1567,7 @@
                 players: "2",
                 duration: "30-60m",
                 year: "2015",
-                tags: ["classic", "modern", "design", "two-player", "wood", "2-players"],
+                tags: ["classic", "modern", "design", "TWO-PLAYERS", "wood"],
                 image: "img/BACKGAMMON X MOMA.jpg",
                 description: "Modernist interpretation of classic backgammon. Beechwood box with contemporary design.",
                 links: [
@@ -1489,7 +1582,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1992",
-                tags: ["abstract", "connection", "three-dimensional", "two-player", "wood", "2-players"],
+                tags: ["abstract", "connection", "three-dimensional", "TWO-PLAYERS", "wood"],
                 image: "img/INTERPLAY.jpg",
                 description: "Five-in-a-row with narrow and wide pieces. Pieces can share space if owned by opposite players.",
                 links: [
@@ -1504,7 +1597,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "1962",
-                tags: ["abstract", "connection", "classic", "two-player", "plastic", "2-players"],
+                tags: ["abstract", "connection", "classic", "TWO-PLAYERS", "plastic"],
                 image: "img/TWIXT.jpg",
                 description: "Classic connection game on pegboard. Create orthogonal bridges between opposite sides.",
                 links: [
@@ -1519,7 +1612,7 @@
                 players: "2-4",
                 duration: "20-40m",
                 year: "1987",
-                tags: ["dexterity", "auction", "stacking", "bluffing", "wood", "2plus-players"],
+                tags: ["dexterity", "auction", "stacking", "bluffing", "wood", "TWO-PLUS-PLAYERS"],
                 image: "img/BANDU.jpg",
                 description: "Auction-based tower building with unusual wooden pieces. Combines dexterity with economic strategy.",
                 links: [
@@ -1695,7 +1788,12 @@
             if (viewToggle) {
                 viewToggle.addEventListener('click', () => {
                     const isDense = gamesGrid.classList.toggle('dense');
-                    viewToggle.textContent = isDense ? 'Vista Standard' : 'Vista Fitta';
+                    const icon = viewToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-grip', isDense);
+                        icon.classList.toggle('fa-table-cells-large', !isDense);
+                    }
+                    viewToggle.setAttribute('aria-label', isDense ? 'Vista standard' : 'Vista fitta');
                 });
             }
             
