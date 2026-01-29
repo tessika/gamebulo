@@ -2121,6 +2121,14 @@
         const aboutLink = document.querySelector('a[href="#about"]');
         const aboutSection = document.getElementById('about');
 
+        function shuffleArray(items) {
+            for (let i = items.length - 1; i > 0; i -= 1) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
+            }
+            return items;
+        }
+
         // Initialize
         function init() {
             // Show loading
@@ -2128,6 +2136,7 @@
             
             // Simulate loading for effect
             setTimeout(() => {
+                shuffleArray(games);
                 renderGames(games);
                 loading.style.display = 'none';
                 setupEventListeners();
