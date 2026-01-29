@@ -519,6 +519,24 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Mobile: keep titles visible (override later base styles) */
+        @media (max-width: 900px) {
+            .game-overlay {
+                opacity: 1;
+                transform: translateY(0);
+                background: linear-gradient(
+                    to top,
+                    rgba(10, 10, 10, 0.98) 0%,
+                    rgba(10, 10, 10, 0.85) 55%,
+                    transparent 100%
+                );
+            }
+
+            .game-title {
+                text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+            }
+        }
+
         .game-card:hover .game-overlay {
             transform: translateY(0);
             opacity: 1;
@@ -583,7 +601,7 @@
             display: flex;
             justify-content: center;
             gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
             flex-wrap: wrap;
         }
 
@@ -615,43 +633,6 @@
             font-weight: 600;
         }
 
-        /* Search */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto var(--spacing-xl);
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 20px 24px 20px 56px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            color: var(--text);
-            font-size: 18px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 2px rgba(255, 51, 102, 0.2);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 20px;
-        }
 
         /* Modal */
         .modal {
@@ -912,10 +893,14 @@
             <h2 class="section-title">THE COLLECTION</h2>
         </div>
 
-        <!-- Search -->
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search games...">
+        <!-- Games Grid -->
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games loaded here -->
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loader"></div>
+            <p>Loading games...</p>
         </div>
 
         <!-- Filters -->
@@ -926,16 +911,6 @@
             <button class="filter-btn" data-filter="wood">Wood</button>
             <button class="filter-btn" data-filter="plastic">Plastic</button>
             <button class="filter-btn" data-filter="cardboard">Cardboard</button>
-        </div>
-
-        <!-- Games Grid -->
-        <div class="games-grid" id="gamesGrid">
-            <!-- Games loaded here -->
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="loader"></div>
-            <p>Loading games...</p>
         </div>
     </section>
 
@@ -1016,7 +991,7 @@
                 players: "1-8",
                 duration: "10-20m",
                 year: "1983",
-                tags: ["dexterity", "stacking", "classic", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/JENGA.jpg",
                 description: "Build a tower from offset wooden blocks, then remove one block at a time and place it on top. Each move shifts the balance and raises the tension. You lose the round if the tower collapses on your turn.",
                 links: [
@@ -1032,7 +1007,7 @@
                 players: "1-4",
                 duration: "5-15m",
                 year: "2010",
-                tags: ["dexterity", "stacking", "abstract", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/TUMI-ISHI.jpg",
                 description: "A balancing puzzle with irregular wooden stones inspired by Japanese rock stacking. Players take turns adding one piece to the growing sculpture. The goal is simple: keep the structure standing longer than everyone else.",
                 links: [
@@ -1047,7 +1022,7 @@
                 players: "2-5",
                 duration: "15-30m",
                 year: "2000",
-                tags: ["dexterity", "stacking", "unique", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/HAMSTERROLLE .jpg",
                 description: "Players place wooden pieces into a rotating wheel divided into chambers. The wheel can shift as weight changes, so every placement is risky. Any pieces that fall out become penalties, and the most careful player wins.",
                 links: [
@@ -1062,7 +1037,7 @@
                 players: "2-4",
                 duration: "20-40m",
                 year: "2002",
-                tags: ["dexterity", "magnetic", "strategy", "plastic", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "plastic", "dexterity"],
                 image: "img/ATTRACTION .jpg",
                 description: "A magnetic dexterity game where players flick a shooter magnet across the table. If it connects to other magnets, you claim them for points. The twist is the invisible pull of the field, which makes every shot unpredictable.",
                 links: [
@@ -1077,7 +1052,7 @@
                 players: "2",
                 duration: "10-25m",
                 year: "1995",
-                tags: ["abstract", "3D", "strategy", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/DOUBLE DECKER .jpg",
                 description: "A two-player abstract on a 3x3 grid with layered pieces that create a second level of play. Placing a piece can also affect what is visible or available above it. Win by forming the required line while denying your opponent’s plans.",
                 links: [
@@ -1092,7 +1067,7 @@
                 players: "2-4",
                 duration: "30-45m",
                 year: "2006",
-                tags: ["strategy", "abstract", "bluffing", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "strategy"],
                 image: "img/CITYSCAPE.jpg",
                 description: "Players build a shared skyline with wooden blocks while pursuing secret scoring goals. On your turn you add, move, or adjust pieces to shape the view. Points come from matching your hidden objectives without revealing them too early.",
                 links: [
@@ -1107,7 +1082,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2000",
-                tags: ["dexterity", "stacking", "hidden", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/BABEL.jpg",
                 description: "A stacking game with cubes that hide small marbles inside, adding uneven weight. Players carefully add blocks to grow the tower without exposing the marbles. If you cause a spill or collapse, you usually hand the advantage to others.",
                 links: [
@@ -1122,7 +1097,7 @@
                 players: "2-4",
                 duration: "15-30m",
                 year: "2003",
-                tags: ["abstract", "color-matching", "strategy", "cardboard", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "cardboard", "abstract"],
                 image: "img/MOZAA.jpg",
                 description: "An abstract tile-laying game built around matching colors and creating large connected areas. Each placement expands some regions while blocking others. You score by controlling the most valuable color groups by the end of the game.",
                 links: [
@@ -1137,7 +1112,7 @@
                 players: "2-4",
                 duration: "30-60m",
                 year: "1876",
-                tags: ["dexterity", "classic", "strategy", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/CROKINOLE.jpg",
                 description: "Players flick wooden discs toward the center of a round board, aiming for high-value scoring zones. A valid shot often requires contacting an opponent’s disc when one is available. Precision, angles, and gentle force win more than power.",
                 links: [
@@ -1152,7 +1127,7 @@
                 players: "2-6",
                 duration: "20-40m",
                 year: "1996",
-                tags: ["dexterity", "balance", "tension", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/BAMBOLEO.jpg",
                 description: "A dramatic balance game: a cork base supports a large wooden disc covered with irregular pieces. On your turn you remove one piece without toppling the platform. The shifting center of gravity makes even simple moves feel dangerous.",
                 links: [
@@ -1167,7 +1142,7 @@
                 players: "2",
                 duration: "15-25m",
                 year: "2005",
-                tags: ["abstract", "connection", "TWO-PLAYERS", "plastic"],
+                tags: ["TWO-PLAYERS", "plastic", "abstract"],
                 image: "img/RUBBER ROAD .jpg",
                 description: "A connection game played with pegs and rubber bands stretched across the board. Each band claims space and blocks future routes because bands cannot overlap. Win by completing an unbroken path between your two opposite sides.",
                 links: [
@@ -1182,7 +1157,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2002",
-                tags: ["dexterity", "stacking", "precision", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/cubicado.jpg",
                 description: "Wooden cubes form a tight pyramid, and players use sticks to push cubes out from the lower levels. Any wobble can shift the whole structure and create cascading mistakes. Score by extracting cleanly while leaving the pyramid standing.",
                 links: [
@@ -1197,7 +1172,7 @@
                 players: "2",
                 duration: "20-40m",
                 year: "2007",
-                tags: ["abstract", "puzzle", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/PLAN CHEROLI.jpg",
                 description: "An abstract puzzle duel with arch-shaped pieces that move by pivoting around their feet. Every rotation changes both your mobility and the opponent’s options. The core challenge is navigating tight spaces while setting clever geometric traps.",
                 links: [
@@ -1212,7 +1187,7 @@
                 players: "2-6",
                 duration: "60-90m",
                 year: "2020",
-                tags: ["strategy", "futurism", "thinking", "cardboard", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "cardboard", "strategy"],
                 image: "img/IMPACT.jpg",
                 description: "A speculative strategy game about technologies, society, and the ripple effects of big decisions. Players develop projects, weigh trade-offs, and react to shifting global pressures. The goal is to create positive outcomes without triggering cascading harm.",
                 links: [
@@ -1227,7 +1202,7 @@
                 players: "2-4",
                 duration: "15-25m",
                 year: "1998",
-                tags: ["dexterity", "precision", "removal", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/BALLAST.jpg",
                 description: "A tense removal game where wooden cylinders rest in a circular frame under fragile balance. Players must extract one piece at a time without disturbing the rest. Even a tiny shift can trigger a chain reaction that punishes greedy choices.",
                 links: [
@@ -1242,7 +1217,7 @@
                 players: "2-4",
                 duration: "30-45m",
                 year: "2015",
-                tags: ["abstract", "3D", "modular", "plastic", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "plastic", "abstract"],
                 image: "img/INFINIFIED .jpg",
                 description: "A modular abstract where the board itself can change through magnetic or interlocking components. Players build structure while competing for position and influence. The shifting geometry forces constant adaptation instead of memorized openings.",
                 links: [
@@ -1257,7 +1232,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1988",
-                tags: ["abstract", "3D", "pyramid", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/DRHOMBIX .jpg",
                 description: "A two-player 3D stacking game with rhombic pieces that nest into a growing pyramid. Placement creates both structural support and tactical threats for future layers. You win by shaping the final form to favor your color and control key spaces.",
                 links: [
@@ -1272,7 +1247,7 @@
                 players: "2",
                 duration: "20-35m",
                 year: "2011",
-                tags: ["abstract", "strategy", "elastic", "TWO-PLAYERS", "plastic"],
+                tags: ["TWO-PLAYERS", "plastic", "abstract"],
                 image: "img/BOUNDARY.jpg",
                 description: "An elastic boundary divides the board, and players manipulate it to capture or isolate opposing pieces. Moves stretch and reshape the frontier, so territory is never stable for long. The game rewards timing, spatial reading, and clever entanglements.",
                 links: [
@@ -1287,7 +1262,7 @@
                 players: "2-4",
                 duration: "25-40m",
                 year: "1992",
-                tags: ["abstract", "color-matching", "strategy", "cardboard", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "cardboard", "abstract"],
                 image: "img/BLOCK OUT:COLOMINO.jpg",
                 description: "Players place multi-colored tiles so that edges match and regions expand in useful ways. Every tile can help you while simultaneously setting traps for opponents. Scoring often comes from blocking off spaces at the right moment and forcing inefficiency.",
                 links: [
@@ -1302,7 +1277,7 @@
                 players: "2-4",
                 duration: "15-25m",
                 year: "1995",
-                tags: ["dexterity", "extraction", "precision", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/KARAMO.jpg",
                 description: "A dexterity extraction game where players push sticks out sideways from a tight bundle. The pile shifts with every move, turning simple actions into risky gambles. Points usually go to the player who reads the structure best and plays the calmest.",
                 links: [
@@ -1317,7 +1292,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "2004",
-                tags: ["dexterity", "stacking", "scoring", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/TOKAMI.jpg",
                 description: "A dexterity stacking game on an X-shaped base where you remove a block and place it higher up. Clean moves can earn extra scoring blocks, while dropped pieces become penalties. The tension comes from balancing risk, stability, and color-based scoring swings.",
                 links: [
@@ -1332,7 +1307,7 @@
                 players: "2",
                 duration: "15-25m",
                 year: "1900",
-                tags: ["abstract", "strategy", "capture", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/LA TREL.jpg",
                 description: "A traditional two-player capture game focused on jumps, blocking lanes, and careful piece trades. Moves create threats in multiple directions, so tempo matters as much as position. Many turns are about setting traps that force your opponent into a losing reply.",
                 links: [
@@ -1347,7 +1322,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "1800",
-                tags: ["abstract", "traditional", "capture", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/DABLOT PREJJESNE.jpg",
                 description: "An asymmetric traditional hunt-style game where one side fields a powerful king while the other has more pieces. Captures come from surrounding and coordinated pressure rather than raw movement speed. The drama is in whether the king can escape before the net closes.",
                 links: [
@@ -1362,7 +1337,7 @@
                 players: "2-4",
                 duration: "25-40m",
                 year: "1999",
-                tags: ["abstract", "3D", "pyramid", "strategy", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "abstract"],
                 image: "img/SCALINO.jpg",
                 description: "A 3D abstract where players build upward under adjacency and support constraints. Every placement changes both the physical structure and the scoring geometry from above. You win by planning layers ahead and leaving opponents with awkward, low-value moves.",
                 links: [
@@ -1377,7 +1352,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1996",
-                tags: ["abstract", "connection", "strategy", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/TOUCH.jpg",
                 description: "A contact-based abstract played with chunky 3D pieces on a hex grid. Points are earned by making legal touches while controlling space and denying future placements. The core skill is reading how one move can create multiple forced contacts on later turns.",
                 links: [
@@ -1392,7 +1367,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "2002",
-                tags: ["abstract", "spatial", "enclosure", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/1 STEIN + CO..jpg",
                 description: "A spatial enclosure game where large rectangular blocks are placed to trap empty space and restrict movement. Each block’s orientation matters, and bad angles can hand the initiative to your opponent. The winning rhythm is to seal areas while keeping your own options flexible.",
                 links: [
@@ -1407,7 +1382,7 @@
                 players: "2",
                 duration: "20-35m",
                 year: "2003",
-                tags: ["abstract", "surround", "strategy", "TWO-PLAYERS", "plastic"],
+                tags: ["TWO-PLAYERS", "plastic", "abstract"],
                 image: "img/ENTRAPMENT.jpg",
                 description: "A surround-and-block abstract where players place barriers and move pawns to cut off escape routes. The board tends to shrink into contested corridors as more obstacles appear. Victory usually comes from a well-timed lock that freezes the last mobile enemy piece.",
                 links: [
@@ -1422,7 +1397,7 @@
                 players: "2",
                 duration: "15-30m",
                 year: "2009",
-                tags: ["abstract", "pentominoes", "stacking", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/PENT-UP.jpg",
                 description: "A pentomino-based stacking duel where pieces rise into a shared 3D structure. Scoring depends on what remains visible and influential from above after each placement. Strong play is about building height without giving your opponent clean, dominating surfaces.",
                 links: [
@@ -1437,7 +1412,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "2010",
-                tags: ["abstract", "hexagonal", "enclosure", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/COERCEO.jpg",
                 description: "A hex-grid enclosure game played on a modular board that can be reduced during play. Players aim to trap opposing pieces while maintaining escape routes for their own groups. The twist is deciding when to shrink the arena to turn pressure into decisive captures.",
                 links: [
@@ -1452,7 +1427,7 @@
                 players: "2",
                 duration: "30-50m",
                 year: "2011",
-                tags: ["abstract", "strategy", "angles", "TWO-PLAYERS", "cardboard"],
+                tags: ["TWO-PLAYERS", "cardboard", "abstract"],
                 image: "img/PERIGON.jpg",
                 description: "An angular abstract with directional movement, tension around key lines, and sudden tactical reversals. Players compete to control space through clever positioning rather than brute exchanges. Most turns balance short-term threats against long-term geometric advantage.",
                 links: [
@@ -1467,7 +1442,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "2009",
-                tags: ["abstract", "connection", "hexagonal", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/TRITT.jpg",
                 description: "A tight connection game on a hex grid using pieces marked with three dots. Placement and orientation determine which lines you extend and which you break. The goal is to complete your connection patterns before your opponent locks the board.",
                 links: [
@@ -1482,7 +1457,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1988",
-                tags: ["abstract", "3D", "magnetic", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/AXIOM.jpg",
                 description: "A three-dimensional abstract built around magnetic pieces and a spatial framework. Moves are constrained by geometry, so every placement changes the future shape of the game. It rewards visualization, patience, and control of key structural points.",
                 links: [
@@ -1497,7 +1472,7 @@
                 players: "2",
                 duration: "10-20m",
                 year: "2011",
-                tags: ["abstract", "minimalist", "stacking", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/SHIBUMI.jpg",
                 description: "A minimalist 3D system played with spheres on a 4×4 grid that naturally stacks into pyramids. Many games emerge from the same elegant physical constraints and packing rules. The core feeling is simple moves producing surprisingly deep spatial consequences.",
                 links: [
@@ -1512,7 +1487,7 @@
                 players: "2",
                 duration: "10-15m",
                 year: "2012",
-                tags: ["abstract", "minimalist", "triangles", "TWO-PLAYERS", "cardboard"],
+                tags: ["TWO-PLAYERS", "cardboard", "abstract"],
                 image: "img/SPANGLES.jpg",
                 description: "An ultra-minimal triangle game where players place small shapes to create larger connected forms. The rules are light, but timing and geometry drive most of the skill. Strong play comes from setting up double threats while limiting the opponent’s clean triangles.",
                 links: [
@@ -1527,7 +1502,7 @@
                 players: "2",
                 duration: "20-30m",
                 year: "1985",
-                tags: ["dexterity", "magnetic", "physics", "TWO-PLAYERS", "plastic"],
+                tags: ["TWO-PLAYERS", "plastic", "dexterity"],
                 image: "img/POLARITY.jpg",
                 description: "A magnetic dexterity duel where pieces hover and slide due to invisible forces. Players influence the field with special magnets and try to capture without causing chaos. It feels part puzzle, part physics experiment, and rewards a gentle, precise touch.",
                 links: [
@@ -1542,7 +1517,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1998",
-                tags: ["abstract", "3D", "five-in-a-row", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/QUINAMID.jpg",
                 description: "A five-in-a-row abstract played across stacked boards that can slide and rotate during play. Alignments are constantly shifting, so plans must adapt to moving layers. The best moves create threats in multiple planes while denying simple counterplay.",
                 links: [
@@ -1557,7 +1532,7 @@
                 players: "2-4",
                 duration: "20-35m",
                 year: "2006",
-                tags: ["abstract", "color-matching", "family", "cardboard", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "cardboard", "abstract"],
                 image: "img/RHOMBO CONTINUO.jpg",
                 description: "A rhombus-based cousin of Continuo where edges must match colors to build coherent patterns. Each placement can help you and open opportunities for opponents at the same time. Success comes from reading the mosaic and creating scoring windows that others can’t exploit.",
                 links: [
@@ -1572,7 +1547,7 @@
                 players: "2",
                 duration: "30-60m",
                 year: "2015",
-                tags: ["classic", "modern", "design", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "classic"],
                 image: "img/BACKGAMMON X MOMA.jpg",
                 description: "A design-forward edition of classic backgammon that keeps the same racing and blocking rules. Players roll dice to move checkers, hit blots, and bear off pieces efficiently. The modern presentation highlights how elegant and tactical the underlying game already is.",
                 links: [
@@ -1587,7 +1562,7 @@
                 players: "2",
                 duration: "25-40m",
                 year: "1992",
-                tags: ["abstract", "connection", "three-dimensional", "TWO-PLAYERS", "wood"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/INTERPLAY.jpg",
                 description: "A connection-style abstract where different piece shapes and widths create layered interactions. Some pieces can coexist in the same space, which produces unusual tactical collisions. The challenge is building your line while navigating overlapping threats and tight timing.",
                 links: [
@@ -1602,7 +1577,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "1962",
-                tags: ["abstract", "connection", "classic", "TWO-PLAYERS", "plastic"],
+                tags: ["TWO-PLAYERS", "plastic", "abstract"],
                 image: "img/TWIXT.jpg",
                 description: "A classic connection game where players place pegs and link them with knight-move bridges. Bridges can’t cross, so every line you build also becomes a wall for the opponent. Victory comes from creating a continuous path between your two opposite sides.",
                 links: [
@@ -1617,7 +1592,7 @@
                 players: "2-4",
                 duration: "20-40m",
                 year: "1987",
-                tags: ["dexterity", "auction", "stacking", "bluffing", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/BANDU.jpg",
                 description: "Auction-based tower building with unusual wooden pieces. Combines dexterity with economic strategy.",
                 links: [
@@ -1632,7 +1607,7 @@
                 players: "2",
                 duration: "20-40m",
                 year: "1978",
-                tags: ["abstract", "territory", "placement", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/cathedral.jpeg",
                 description: "A territorial placement game on a 10x10 grid with chunky polyomino buildings. Players surround empty areas to claim them while the neutral cathedral blocks space. When the board fills, the player with fewer unplaced pieces wins.",
                 links: [
@@ -1647,7 +1622,7 @@
                 players: "2",
                 duration: "15-30m",
                 year: "2016",
-                tags: ["abstract", "connection", "stacking", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/tak.webp",
                 description: "A connection game where players build a road from one side of the board to the other. Stones can stack, and taller stacks can move to spread control across the grid. Capstones add power by flattening walls and breaking tight defenses.",
                 links: [
@@ -1662,7 +1637,7 @@
                 players: "2-4",
                 duration: "20-45m",
                 year: "1890",
-                tags: ["dexterity", "flicking", "classic", "wood", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "wood", "dexterity"],
                 image: "img/carrom.png",
                 description: "A tabletop flicking game where players strike a heavier disc to pocket their own pieces. Shots combine carom angles, rebounds, and careful speed control. Win by clearing your color and covering the queen at the right moment.",
                 links: [
@@ -1677,7 +1652,7 @@
                 players: "2-4",
                 duration: "20-30m",
                 year: "1978",
-                tags: ["dexterity", "stacking", "balance", "plastic", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "plastic", "dexterity"],
                 image: "img/topple.webp",
                 description: "Players stack pieces onto a wobbly tower according to die results and color restrictions. The structure becomes unstable quickly, forcing tough placement choices. If the tower falls on your turn, you usually take the penalty.",
                 links: [
@@ -1692,7 +1667,7 @@
                 players: "2",
                 duration: "30-90m",
                 year: "2200 BC",
-                tags: ["abstract", "territory", "classic", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/go.jpg",
                 description: "A legendary territory game where players place stones on the intersections of a grid. Stones capture by surrounding enemy groups and removing their liberties. The winner controls more territory after both players pass and the board is scored.",
                 links: [
@@ -1707,7 +1682,7 @@
                 players: "2-4",
                 duration: "20-40m",
                 year: "2004",
-                tags: ["abstract", "3D", "placement", "plastic", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "plastic", "abstract"],
                 image: "img/blokus3d.webp",
                 description: "A three-dimensional twist on Blokus where players build upward with polycube pieces. Pieces must touch your own color only at corners, creating elegant constraints in space. The winner is the player who manages to place the most pieces before the structure locks up.",
                 links: [
@@ -1722,7 +1697,7 @@
                 players: "2",
                 duration: "30-45m",
                 year: "2001",
-                tags: ["abstract", "stacking", "capture", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/dvoon.png",
                 description: "A stacking and capture game from the GIPF series played on a hex grid with special DVONN stones. After placement, players move and stack pieces, but every stack must stay connected to a DVONN stone. Disconnected stacks are removed, so position and connectivity are everything.",
                 links: [
@@ -1737,7 +1712,7 @@
                 players: "2",
                 duration: "30-60m",
                 year: "2005",
-                tags: ["abstract", "connection", "strategy", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/PUNCT.jpg",
                 description: "A connection game on a hex grid where each player tries to link their two opposite sides. Pieces have different shapes and orientations, and the punct piece can anchor bold structural moves. The puzzle is reading long-term lines while blocking just enough to survive.",
                 links: [
@@ -1752,7 +1727,7 @@
                 players: "2",
                 duration: "15-30m",
                 year: "2001",
-                tags: ["abstract", "strategy", "stacking", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/Gobblet!.jpg",
                 description: "A memory-and-stacking twist on tic-tac-toe played with nesting pieces. Larger pieces can cover smaller ones, including your own, creating hidden threats. You win by making a visible line of four while keeping track of what is buried underneath.",
                 links: [
@@ -1767,7 +1742,7 @@
                 players: "2",
                 duration: "20-40m",
                 year: "2017",
-                tags: ["abstract", "territory", "placement", "wood", "TWO-PLAYERS"],
+                tags: ["TWO-PLAYERS", "wood", "abstract"],
                 image: "img/kulami.jpg",
                 description: "A territory game played on a shifting patchwork of wooden tiles, each with a grid of holes. Players place marbles and must move to a different tile and row or column each turn. Control of each tile is scored at the end, so timing and tile choice matter a lot.",
                 links: [
@@ -1782,7 +1757,7 @@
                 players: "2-4",
                 duration: "30-60m",
                 year: "1984",
-                tags: ["abstract", "3D", "stacking", "plastic", "TWO-PLUS-PLAYERS"],
+                tags: ["TWO-PLUS-PLAYERS", "plastic", "abstract"],
                 image: "img/strata.jpg",
                 description: "A three-dimensional stacking game where players build connected levels while racing toward higher strata. The structure grows upward and outward, so each placement can open or close whole lines of play. The key tension is climbing fast without leaving your position exposed.",
                 links: [
@@ -1794,7 +1769,6 @@
 
         // DOM Elements
         const gamesGrid = document.getElementById('gamesGrid');
-        const searchInput = document.getElementById('searchInput');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const gameModal = document.getElementById('gameModal');
         const closeModal = document.getElementById('closeModal');
@@ -1912,20 +1886,9 @@
 
         // Filter Games
         function filterGames() {
-            const searchTerm = searchInput.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
             
             let filtered = games;
-            
-            // Apply search
-            if (searchTerm) {
-                filtered = filtered.filter(game => 
-                    game.title.toLowerCase().includes(searchTerm) ||
-                    game.designer.toLowerCase().includes(searchTerm) ||
-                    game.description.toLowerCase().includes(searchTerm) ||
-                    game.tags.some(tag => tag.includes(searchTerm))
-                );
-            }
             
             // Apply filter
             if (activeFilter !== 'all') {
@@ -1940,13 +1903,6 @@
 
         // Event Listeners
         function setupEventListeners() {
-            // Search with debounce
-            let searchTimeout;
-            searchInput.addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(filterGames, 300);
-            });
-            
             // Filter buttons
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
